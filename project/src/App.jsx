@@ -15,30 +15,30 @@ function App() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const safeParse = (data) => {
-  try {
-    return data && data !== "undefined" ? JSON.parse(data) : [];
-  } catch {
-    return [];
-  }
-};
+    try {
+      return data && data !== "undefined" ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  };
 
   const [products, setProducts] = useState(() => {
     const saved = localStorage.getItem("items");
-    return safeParse(saved)
+    return safeParse(saved);
   });
 
-  const [cart, setCart] = useState(()=>{
-    const savedCart=localStorage.getItem("cart");
-    return safeParse(savedCart)
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return safeParse(savedCart);
   });
 
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(products));
   }, [products]);
 
-  useEffect(()=>{
-    localStorage.setItem('cart',JSON.stringify(cart),
-     )}, [cart]);
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const searchproducts = products.filter((product) =>
     product.title?.toLowerCase().includes(search.toLowerCase()),
@@ -55,72 +55,67 @@ function App() {
   };
 
   const addtoCart = (product) => {
-    setCart((prev)=>{
-      const existing=prev.find(item=>item.id===product.id)
-      if (existing){
-        return prev.map(item=>
-          item.id===product.id
-          ?{
-            ...item, 
-            qty:item.qty+1,
-            subtotal:(item.qty+1)*item.price
-          }:item
-        )
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                qty: item.qty + 1,
+                subtotal: (item.qty + 1) * item.price,
+              }
+            : item,
+        );
+      } else {
+        return [...prev, { ...product, qty: 1, subtotal: product.price }];
       }
-      else{
-        return[
-          ...prev,
-            {...product,
-              qty:1,
-              subtotal:product.price}
-          
-        ]
-      }
-
     });
     navigate("/cart");
   };
-  
-  const incrementqty=(id)=>{
-    setCart(prev=>
-      prev.map(item=>
-        item.id==id?
-        {
-          ...item,
-          qty:item.qty+1,
-          subtotal:(item.qty+1)*item.price
-        }
-        :item
-      )
-    )
-  }
 
-  const decrementqty=(id)=>{
-    setCart(prev=>
-     prev.map(item=>
-      item.id===id ?
-      {
-        ...item, 
-        qty:item.qty-1,
-        subtotal:(item.qty-1)*item.price
-      }:item
-     )
-     .filter(item=>item.qty > 0)
-    )}
+  const incrementqty = (id) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id == id
+          ? {
+              ...item,
+              qty: item.qty + 1,
+              subtotal: (item.qty + 1) * item.price,
+            }
+          : item,
+      ),
+    );
+  };
 
-    const removeFromCart=(id)=>{
-      setCart(prev=>prev.filter(item=>item.id!==id))
-    }
+  const decrementqty = (id) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                qty: item.qty - 1,
+                subtotal: (item.qty - 1) * item.price,
+              }
+            : item,
+        )
+        .filter((item) => item.qty > 0),
+    );
+  };
 
-    const checkout=()=>{
-    setCart([])
-    navigate('/orderConfirmation')
-  }
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
 
-  
+  const checkout = () => {
+    setCart([]);
+    navigate("/orderConfirmation");
+  };
+
   return (
     <>
-      <Header setSearch={setSearch} cart={cart}/>
+      <Header setSearch={setSearch} cart={cart} />
       <Routes>
         <Route path="/" element={<Products products={searchproducts} />} />
         <Route
@@ -131,7 +126,18 @@ function App() {
           path="/productDetails/:id"
           element={<ProductDetails products={products} addtoCart={addtoCart} />}
         />
-        <Route path="/cart" element={<Cart cart={cart} incrementqty={incrementqty} decrementqty={decrementqty} removeFromCart={removeFromCart} checkout={checkout} />} />
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cart={cart}
+              incrementqty={incrementqty}
+              decrementqty={decrementqty}
+              removeFromCart={removeFromCart}
+              checkout={checkout}
+            />
+          }
+        />
         <Route path="/orderConfirmation" element={<OrderConfirm />} />
         <Route
           path="/productslist"
