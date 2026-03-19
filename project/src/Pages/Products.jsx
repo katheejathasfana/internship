@@ -8,7 +8,7 @@ const Products = ({products}) => {
     <div>
       
         <div className='container-fluid'>
-            <img src="/images/banner.webp" alt="" 
+            <img src="/images/banner.jpg" alt="" 
             className='img-fluid w-100'  style={{height:'400px'}}/>
         </div>
 
