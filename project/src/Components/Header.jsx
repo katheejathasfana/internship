@@ -36,8 +36,12 @@ const Header = ({setSearch,cart}) => {
             />   
           </form>
 
+           <Link className="btn btn-outline-light" to="/productslist">
+            Products
+          </Link>
+
           {/* Cart button on the right */}
-          <Link className="btn btn-outline-light ms-auto" to="/cart">
+          <Link className="btn btn-outline-light ms-4" to="/cart">
             Cart {cart.length}
           </Link>
         </div>

@@ -24,21 +24,35 @@ const ProductDetails = ({ products, addtoCart }) => {
           </div>
 
           <div className="col-md-6">
-            <h2>{product.title}</h2>
-             <h4>{product.brand}</h4>
-            <h5>{product.price}</h5>
-            <h4>{product.category}</h4>
-             <h4>{product.stock}</h4>
-           
+            <h2 className="fw-bold mb-2">{product.title}</h2>
+
+            <p className="text-muted mb-2">
+              <strong>Brand:</strong> {product.brand}
+            </p>
+
+            <h4 className="text-success fw-bold mb-3">₹{product.price}</h4>
+
+            <p className="mb-2">
+              <span className="badge bg-dark">{product.category}</span>
+            </p>
+
+            <p className="mb-0">
+              <strong>Stock:</strong>{" "}
+              <span
+                className={product.stock > 0 ? "text-success" : "text-danger"}
+              >
+                {product.stock > 0 ? "In Stock" : "Out of Stock"}
+              </span>
+            </p>
+
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae ex,
-              impedit eius doloremque voluptas dolores omnis voluptate
-              explicabo, ducimus cupiditate repellat? Ea alias, amet est ducimus
-              doloribus error veritatis dolor?
+              {product.desc}
             </p>
             <div className="d-flex justify-content-center">
-              <button className="btn mt-5 py-2 px-4 border rounded bg-secondary text-light"
-              onClick={()=>addtoCart(product)}>
+              <button
+                className="btn mt-5 py-2 px-4 border rounded bg-secondary text-light"
+                onClick={() => addtoCart(product)}
+              >
                 add to cart
               </button>
             </div>
