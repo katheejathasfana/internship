@@ -9,6 +9,7 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { useNavigate } from "react-router-dom";
 import Productslist from "./Pages/Productslist";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   // console.log(products)
@@ -149,6 +150,7 @@ function App() {
             />
           }
         />
+        <Route path="*" element={< NotFound />}/>
       </Routes>
       <Footer />
     </>
