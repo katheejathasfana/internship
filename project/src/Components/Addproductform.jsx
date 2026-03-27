@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Addproductform = ({ addProduct }) => {
+  
   const [preview, setPreview] = useState(null);
   const [formData, setFormData] = useState({
     title: "",

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ProductCard = ({id,image,title,price}) => {
-    console.log(id)
+    console.log(image)
   return (
     <div className='col-md-4 col-lg-3 mb-3 '>
         <div className='card h-100 border-0 shadow-lg product-card'>

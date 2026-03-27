@@ -12,6 +12,39 @@ import Productslist from "./Pages/Productslist";
 import NotFound from "./Pages/NotFound";
 
 function App() {
+  
+  const defaultProducts = [
+  {
+    id: 1,
+    title: "iPhone 13",
+    category: "Mobile",
+    brand: "Apple",
+    stock: 6,
+    price: 60000,
+    desc: "128GB storage, A15 Bionic chip",
+    image: "/images/iphone.avif"
+  },
+  {
+    id: 2,
+    title: "Galaxy S22",
+    category: "Mobile",
+    brand: "Samsung",
+    stock: 10,
+    price: 50000,
+    desc: "8GB RAM, 128GB storage",
+    image: "/images/s22.jpg"
+  },
+  {
+    id: 3,
+    title: "Redmi Note 12",
+    category: "Mobile",
+    brand: "Xiaomi",
+    stock: 15,
+    price: 18000,
+    desc: "6GB RAM, 64MP camera",
+    image: "/images/redmi.webp"
+  }
+];
   // console.log(products)
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -23,10 +56,16 @@ function App() {
     }
   };
 
-  const [products, setProducts] = useState(() => {
-    const saved = localStorage.getItem("items");
-    return safeParse(saved);
-  });
+const [products, setProducts] = useState(() => {
+  const saved = localStorage.getItem("items");
+  const parsed = safeParse(saved);
+
+  if (parsed && parsed.length > 0) {
+    return parsed;
+  } else {
+    return defaultProducts;
+  }
+});
 
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
